@@ -10,8 +10,19 @@ public abstract class Product {
     private final BigDecimal taxPercent;
 
     protected Product(String name, BigDecimal price, BigDecimal tax) {
+        if (name == null) {
+            throw new IllegalArgumentException("Name missing");
+        }
         this.name = name;
+
+        if (price == null) {
+            throw new IllegalArgumentException("Price missing");
+        }
         this.price = price;
+
+        if (tax == null) {
+            throw new IllegalArgumentException("Tax missing");
+        }
         this.taxPercent = tax;
     }
 
