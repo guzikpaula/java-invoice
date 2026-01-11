@@ -14,13 +14,12 @@ public abstract class Product {
             throw new IllegalArgumentException("Name missing");
         }
         this.name = name;
-
         if (price == null || price.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Price missing or negative");
         }
         this.price = price;
 
-        }
+
         this.taxPercent = tax;
     }
 
