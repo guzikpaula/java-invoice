@@ -13,4 +13,4 @@ jobs:
           distribution: 'adopt'
       - name: Test
 
-        run: mvn checklist:check
+        run: mvn checkstyle:check

@@ -10,6 +10,7 @@ import pl.edu.agh.mwo.invoice.product.Product;
 
 public class Invoice {
 
+
     private Map<Product, Integer>
     products = new HashMap<>();
 
@@ -61,5 +62,38 @@ public void addProduct(Product product ){
             value = value.add(grossPrice);
         }
         return value;
+    }
+
+    public String print() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Faktura nr: ").append(this.number).append("\n");
+
+        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+            Product product = entry.getKey();
+            int quantity = entry.getValue();
+            BigDecimal grossPrice = product.getPriceWithTax().multiply(BigDecimal.valueOf(quantity));
+
+            sb.append(product.getName())
+                    .append(", ")
+                    .append(quantity)
+                    .append(", ")
+                    .append(grossPrice)
+                    .append("\n");
+        }
+
+        sb.append("Liczba pozycji: ").append(products.size());
+        return sb.toString();
+    }
+
+
+    private static int counter = 0;
+    private int number;
+
+    public Invoice() {
+        this.number = ++counter;
+    }
+
+    public int getNumber() {
+        return this.number;
     }
 }

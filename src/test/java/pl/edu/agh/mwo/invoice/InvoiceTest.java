@@ -124,4 +124,48 @@ public class InvoiceTest {
     public void testAddingNullProduct() {
         invoice.addProduct(null);
     }
+
+
+    @Test
+    public void testInvoiceHasNumber() {
+        int number = invoice.getNumber();
+        Assert.assertTrue(number > 0);
+    }
+
+    @Test
+    public void testTwoInvoicesHaveDifferentNumbers() {
+        Invoice invoice1 = new Invoice();
+        Invoice invoice2 = new Invoice();
+        Assert.assertNotEquals(invoice1.getNumber(), invoice2.getNumber());
+    }
+
+    @Test
+    public void testSameInvoiceHasSameNumber() {
+        Invoice invoice1 = new Invoice();
+        Assert.assertEquals(invoice1.getNumber(), invoice1.getNumber());
+    }
+
+    @Test
+    public void testPrintContainsInvoiceNumber() {
+        String printed = invoice.print();
+        Assert.assertTrue(printed.contains("Faktura nr: " + invoice.getNumber()));
+    }
+
+    @Test
+    public void testPrintContainsProductLine() {
+        Product milk = new DairyProduct("Mleko", new BigDecimal("10"));
+        invoice.addProduct(milk, 2);
+        String printed = invoice.print();
+        // 2x Mleko, gross price = 10 * 1.08 * 2 = 21.60
+        Assert.assertTrue(printed.contains("Mleko, 2, 21.60"));
+    }
+
+    @Test
+    public void testPrintContainsItemCount() {
+        invoice.addProduct(new TaxFreeProduct("Chleb", new BigDecimal("5")));
+        invoice.addProduct(new DairyProduct("Mleko", new BigDecimal("10")));
+        String printed = invoice.print();
+        Assert.assertTrue(printed.contains("Liczba pozycji: 2"));
+    }
+
 }
