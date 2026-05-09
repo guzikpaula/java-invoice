@@ -42,4 +42,17 @@ public abstract class Product {
         return this.price.multiply(this.taxPercent).add(this.price);
 
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return name.equals(product.name) && price.compareTo(product.price) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode() + price.stripTrailingZeros().hashCode();
+    }
 }

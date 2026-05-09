@@ -177,4 +177,14 @@ public class InvoiceTest {
         Assert.assertEquals(expected, invoice.print());
     }
 
+    @Test
+    public void testAddingSameProductTwiceAccumulatesQuantity() {
+        Product milk = new DairyProduct("Mleko", new BigDecimal("10"));
+        Product milk2 = new DairyProduct("Mleko", new BigDecimal("10"));
+        invoice.addProduct(milk, 2);
+        invoice.addProduct(milk2, 3);
+        Assert.assertThat(new BigDecimal("54.00"),
+                Matchers.comparesEqualTo(invoice.getGrossValue()));
+    }
+
 }
