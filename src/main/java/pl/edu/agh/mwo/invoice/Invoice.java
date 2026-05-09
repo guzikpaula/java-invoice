@@ -13,6 +13,7 @@ public class Invoice {
     public void addProduct(Product product) {
         this.addProduct(product, 1);
     }
+
     public void addProduct(Product product, Integer quantity) {
         if (product == null) {
             throw new IllegalArgumentException("Product cannot be empty");
