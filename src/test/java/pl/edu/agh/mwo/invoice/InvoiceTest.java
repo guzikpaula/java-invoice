@@ -156,7 +156,6 @@ public class InvoiceTest {
         Product milk = new DairyProduct("Mleko", new BigDecimal("10"));
         invoice.addProduct(milk, 2);
         String printed = invoice.print();
-        // 2x Mleko, gross price = 10 * 1.08 * 2 = 21.60
         Assert.assertTrue(printed.contains("Mleko, 2, 21.60"));
     }
 
@@ -166,6 +165,16 @@ public class InvoiceTest {
         invoice.addProduct(new DairyProduct("Mleko", new BigDecimal("10")));
         String printed = invoice.print();
         Assert.assertTrue(printed.contains("Liczba pozycji: 2"));
+    }
+
+    @Test
+    public void testPrintFullOutput() {
+        Product milk = new DairyProduct("Mleko", new BigDecimal("10"));
+        invoice.addProduct(milk, 2);
+        String expected = "Faktura nr: " + invoice.getNumber() + "\n"
+                + "Mleko, 2, 21.60\n"
+                + "Liczba pozycji: 1";
+        Assert.assertEquals(expected, invoice.print());
     }
 
 }
